@@ -1,0 +1,9 @@
+@import "setup";
+
+.submit, .submit:active, .submit:focus {
+	outline: none;
+}
+
+.wrapper {
+	max-width: 1000px;
+}
