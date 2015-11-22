@@ -22,7 +22,7 @@ quakes.getData = function() {
 	  quakes.makeGraph();
 	  quakes.map();
 	});
-	};
+};
 
 //sort quake data
 quakes.sortData = function(data) {
@@ -42,11 +42,12 @@ quakes.sortData = function(data) {
 	  }
 };
 
-//put number of earthquakes in the last year on the page
+//put number of earthquakes in the last x on the page. Could use quakes.mag.length or quakes.number
 quakes.printData = function(){
-	$(".number").text(quakes.number);
+	$(".number").text(quakes.mag.length);
 };
 
+//make quake c3 graph
 quakes.makeGraph = function() {
 	var chart = c3.generate({
 			    data: {
@@ -57,33 +58,37 @@ quakes.makeGraph = function() {
 	});
 };
 
+//make map
 quakes.map = function (){
       L.mapbox.accessToken = 'pk.eyJ1IjoiY2FyeXMiLCJhIjoiY2lmcnA0bDAxMG1yNHMybTB4cDFkMnEzMyJ9.4Z26iDuKWwLy8qs1MyTkDg';
-   var map = L.mapbox.map('map', 'carys.nn6p55nf')
+   var map = L.mapbox.map('map', 'carys.o80m0io8')
        .setView([62, -105.50], 2);
-
-       L.marker([quakes.lat, quakes.long], {
+       for (i = 0; i < quakes.mag.length; i++) {
+       L.marker([quakes.lat[i], quakes.long[i]], {
            icon: L.mapbox.marker.icon({
-               'marker-size': 'large',
-               'marker-symbol': 'bus',
-               'marker-color': '#fa0'
+               'marker-color': '#fa0',
+               'marker-size' : 'small'
            })
-       }).addTo(map);
-};
+         }).addTo(map);
+     };
+ };
 
+// change everything when user changes time period. TBD
+// quakes.change = function(stuff){
+//   $('#quake-select').on("change", function(){
+//     var firstTime = $(this).val();
+//     quakes.getData();
+//     quakes.sortData();
+//     quakes.makeGraph();
+//     quakes.printData();
+//   });
+// }; 
 
-//put it all together in the init 
 quakes.init = function() {
 	quakes.getData();	
 };
 
-//run the init on page ready
 $(document).ready(function(){
   quakes.init();
-  $('#quake-select').on("change", function(){
-    var firstTime = $(this).val();
-    quakes.getData();
-    quakes.sortData();
-    quakes.makeGraph();
-  });
+  // quakes.change();
 });
