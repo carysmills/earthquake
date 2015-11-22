@@ -3,20 +3,24 @@
 var quakes = {};
 quakes.mag = [];
 quakes.felt = [];
-quakes.where =[];
+quakes.lat =[];
+quakes.long =[];
 quakes.time = [];
 quakes.deets = [];
 quakes.date = [];
+quakes.firstTime = "7d";
 
 //*Get quake data
 quakes.getData = function() {
 	$.ajax({
-	  url: 'http://www.earthquakescanada.nrcan.gc.ca/api/earthquakes/latest/7d.json',
+	  url: 'http://www.earthquakescanada.nrcan.gc.ca/api/earthquakes/latest/' + quakes.firstTime + '.json',
 	  method: 'GET',
 	  dataType: 'json'
 	}).then(function(res) {
 	  quakes.sortData(res);
 	  quakes.printData();
+	  quakes.makeGraph();
+	  quakes.map();
 	});
 	};
 
@@ -29,7 +33,8 @@ quakes.sortData = function(data) {
 	  		quakes.mag.push(data[info].magnitude);
 	  		quakes.string = quakes.mag.toString().replace(/,/g, ', ');
 	  		quakes.felt.push(data[info].felt);
-	  		quakes.where.push(data[info].geoJSON.coordinates);
+	  		quakes.lat.push(data[info].geoJSON.coordinates[0]);
+	  		quakes.long.push(data[info].geoJSON.coordinates[1]);
 	  		quakes.time.push(data[info].origin_time);
 	  		quakes.date.push(data[info].origin_time.replace(/T.*$/, ""));
 	  		quakes.deets.push(data[info].location.en);
@@ -42,32 +47,29 @@ quakes.printData = function(){
 	$(".number").text(quakes.number);
 };
 
-
-//start of graph
-            // line chart data
-            var cheeseData = {
-                labels : [quakes.date],
-                datasets : [
-                  {
-            label: "Specialty cheese consuption per capita",
-            fillColor: "#FFF380",
-            strokeColor: "#800080",
-            pointColor: "#FFF380",
-            pointStrokeColor: "#800080",
-            pointHighlightFill: "#fff",
-            pointHighlightStroke: "#800080",
-                    data : [quakes.string]
-                  }
-    ]
+quakes.makeGraph = function() {
+	var chart = c3.generate({
+			    data: {
+			        json: {
+			            earthquakes: quakes.mag,
+			        }
+			    }
+	});
 };
 
-            // get line chart canvas
-            var cheese = document.getElementById('cheese').getContext('2d');
-            // draw line chart
-            new Chart(cheese).Line(cheeseData, {
-        });
+quakes.map = function (){
+      L.mapbox.accessToken = 'pk.eyJ1IjoiY2FyeXMiLCJhIjoiY2lmcnA0bDAxMG1yNHMybTB4cDFkMnEzMyJ9.4Z26iDuKWwLy8qs1MyTkDg';
+   var map = L.mapbox.map('map', 'carys.nn6p55nf')
+       .setView([62, -105.50], 2);
 
- //end of graph           
+       L.marker([quakes.lat, quakes.long], {
+           icon: L.mapbox.marker.icon({
+               'marker-size': 'large',
+               'marker-symbol': 'bus',
+               'marker-color': '#fa0'
+           })
+       }).addTo(map);
+};
 
 
 //put it all together in the init 
@@ -78,4 +80,10 @@ quakes.init = function() {
 //run the init on page ready
 $(document).ready(function(){
   quakes.init();
+  $('#quake-select').on("change", function(){
+    var firstTime = $(this).val();
+    quakes.getData();
+    quakes.sortData();
+    quakes.makeGraph();
+  });
 });

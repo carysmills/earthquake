@@ -4,19 +4,29 @@
 	<meta charset="UTF-8">
 	<title>Canadian earthquakes</title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.10/c3.css">
 	<link rel="stylesheet" href="Styles/style.css">
+	<script src='https://api.mapbox.com/mapbox.js/v2.2.3/mapbox.js'></script>
+	<link href='https://api.mapbox.com/mapbox.js/v2.2.3/mapbox.css' rel='stylesheet' />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
 <body ontouchstart=""><!--  add loading class, take off once loaded ??? -->
 <section class="wrapper">
 
+	<select name="days" id="quake-select">
+	  <option value="7d">A week</option>
+	  <option value="365d">A year</option>
+	</select>
+
 	<div class="intro">
 		<p>There have been <span class="number"><i class="fa fa-refresh fa-spin"></i></span> earthquakes in Canada in the last seven days.</p>
 	</div>
 
 
-   <canvas id="cheese" width="600" height="400" ></canvas>    
+   <div id="chart"></div>
+
+   <div id='map'></div>
 
 
 </section> <!-- end of .wrapper	 -->
@@ -26,9 +36,10 @@
 	</footer>
 
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-	<script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.js'></script>
-
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.9/d3.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.10/c3.js"></script>
 	<script src="JS/script.js"></script>
+
 	<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
 
 <!-- 	CREDITS: 

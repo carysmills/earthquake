@@ -132,3 +132,9 @@ legend, button::-moz-focus-inner, input::-moz-focus-inner {
 
 .wrapper {
   max-width: 1000px; }
+
+#map {
+  position: absolute;
+  top: 65vh;
+  bottom: 0;
+  width: 100%; }
