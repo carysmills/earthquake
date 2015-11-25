@@ -10,6 +10,7 @@ quakes.deets = [];
 quakes.date = [];
 quakes.firstTime = "7d";
 
+
 //*Get quake data
 quakes.getData = function() {
 	$.ajax({
@@ -50,11 +51,23 @@ quakes.printData = function(){
 //make quake c3 graph
 quakes.makeGraph = function() {
 	var chart = c3.generate({
-			    data: {
+			    data: {			    	
 			        json: {
 			            earthquakes: quakes.mag,
 			        }
-			    }
+			    },
+			    tooltip: {
+			            contents: function (d, defaultTitleFormat, defaultValueFormat, color) {
+			            	for (i = 0; i < quakes.mag.length; i++) {
+				                return  "Magnitude: " + d[0].value +
+				                    "<br>" +
+				                    "Date: " + quakes.date[i] +
+				                    "<br>" +
+				                    "Location: " + quakes.deets[i];
+
+				            }
+				        }
+				       } 
 	});
 };
 
@@ -62,15 +75,19 @@ quakes.makeGraph = function() {
 quakes.map = function (){
       L.mapbox.accessToken = 'pk.eyJ1IjoiY2FyeXMiLCJhIjoiY2lmcnA0bDAxMG1yNHMybTB4cDFkMnEzMyJ9.4Z26iDuKWwLy8qs1MyTkDg';
    var map = L.mapbox.map('map', 'carys.o80m0io8')
-       .setView([62, -105.50], 2);
+       .setView([62, -105.50], 3);
+
        for (i = 0; i < quakes.mag.length; i++) {
-       L.marker([quakes.lat[i], quakes.long[i]], {
-           icon: L.mapbox.marker.icon({
-               'marker-color': '#fa0',
-               'marker-size' : 'small'
-           })
-         }).addTo(map);
-     };
+
+	       if (quakes.mag[i] <= 1) {	
+	       L.marker([quakes.lat[i], quakes.long[i]], {
+	           icon: L.mapbox.marker.icon({
+	               'marker-color': '#E5F993',
+	               'marker-size' : 'small'
+	           }) 
+	         }).addTo(map);
+	     };
+ 	};
  };
 
 // change everything when user changes time period. TBD
@@ -90,5 +107,6 @@ quakes.init = function() {
 
 $(document).ready(function(){
   quakes.init();
+  $("h1").fitText(1.2);
   // quakes.change();
 });

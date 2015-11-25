@@ -6,6 +6,87 @@
 
 .wrapper {
 	max-width: 1000px;
+	margin: 0 auto;
 }
 
-  #map { position:absolute; top:65vh; bottom:0; width:100%; }
+.intro {
+	text-align: center;
+}
+
+#chart {
+	margin: 5%;	
+}
+
+#map { 
+  	  height: 70vh;
+  }
+
+ h1 {
+ 	text-align: center;
+ 	color: orange;
+ 	font-family: 'Sigmar One', sans-serif;
+ 	margin-bottom: 0;
+ } 
+
+ h3 {
+ 	margin-top: 0;
+ }
+
+select {
+	display: block;
+	margin: 0 auto;
+}
+
+.intro {
+	width: 80%;
+	display: block;
+	margin: 0 auto;
+}
+
+//ANIMATION
+
+.animated {
+  -webkit-animation-duration: 0.8s;
+  animation-duration: 0.8s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
+
+@-webkit-keyframes shake {
+  from, to {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+
+  10%, 30%, 50%, 70%, 90% {
+    -webkit-transform: translate3d(-20px, 0, 0);
+    transform: translate3d(-20px, 0, 0);
+  }
+
+  20%, 40%, 60%, 80% {
+    -webkit-transform: translate3d(20px, 0, 0);
+    transform: translate3d(20px, 0, 0);
+  }
+}
+
+@keyframes shake {
+  from, to {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+
+  10%, 30%, 50%, 70%, 90% {
+    -webkit-transform: translate3d(-20px, 0, 0);
+    transform: translate3d(-20px, 0, 0);
+  }
+
+  20%, 40%, 60%, 80% {
+    -webkit-transform: translate3d(20px, 0, 0);
+    transform: translate3d(20px, 0, 0);
+  }
+}
+
+.shake {
+  -webkit-animation-name: shake;
+  animation-name: shake;
+}
