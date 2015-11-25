@@ -53,7 +53,7 @@ quakes.makeGraph = function() {
 	var chart = c3.generate({
 			    data: {			    	
 			        json: {
-			            earthquakes: quakes.mag,
+			            "Earthquakes by magnitude": quakes.mag,
 			        }
 			    },
 			    tooltip: {
@@ -79,14 +79,35 @@ quakes.map = function (){
 
        for (i = 0; i < quakes.mag.length; i++) {
 
-	       if (quakes.mag[i] <= 1) {	
-	       L.marker([quakes.lat[i], quakes.long[i]], {
-	           icon: L.mapbox.marker.icon({
-	               'marker-color': '#E5F993',
-	               'marker-size' : 'small'
-	           }) 
+	       if (quakes.mag[i] <= 2) {
+	       	      	L.circleMarker([quakes.lat[i], quakes.long[i]], {
+	       	                color: '#E5F993',
+	       	                radius: 6,
+	       	          }).addTo(map);
+	       	}
+
+	     else if (quakes.mag[i] > 2 && quakes.mag[i] < 3) {
+	     	      	L.circleMarker([quakes.lat[i], quakes.long[i]], {
+	     	                color: '#F9DC5C',
+	     	                radius: 8,
+	     	          }).addTo(map);
+	     	}
+
+	     else if (quakes.mag[i] > 3 && quakes.mag[i] < 4) {
+	           	L.circleMarker([quakes.lat[i], quakes.long[i]], {
+	                     color: '#E9CE2C',
+	                     radius: 10,
+	               }).addTo(map);
+	     }
+
+	     else if (quakes.mag[i] > 4 && quakes.mag[i] < 100) {
+	     	L.circleMarker([quakes.lat[i], quakes.long[i]], {
+	               color: '#BF211E',
+	               radius: 12,
+	               zIndex : 1000
 	         }).addTo(map);
-	     };
+	     }
+
  	};
  };
 

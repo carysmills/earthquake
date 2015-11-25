@@ -1,5 +1,9 @@
 @import "setup";
 
+body {
+	background: lightgrey;
+}
+
 .submit, .submit:active, .submit:focus {
 	outline: none;
 }
@@ -30,7 +34,11 @@
 
  h3 {
  	margin-top: 0;
- }
+ 	font-weight: normal;
+ 	span {
+ 	font-weight: lighter;	
+ 	}
+ } 
 
 select {
 	display: block;
