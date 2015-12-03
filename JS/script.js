@@ -7,7 +7,6 @@ quakes.long =[];
 quakes.time = [];
 quakes.deets = [];
 quakes.date = [];
-quakes.firstTime = "7d";
 
 //*Get quake data
 quakes.getData = function() {
@@ -41,15 +40,25 @@ quakes.sortData = function(data) {
 	  }
 };
 
-//put number of earthquakes in the last x on the page. Could use quakes.mag.length or quakes.number
+//put number of earthquakes in the last x on the page. 
 quakes.printData = function(){
 	$(".number").text(quakes.mag.length);
+	$(".location").text(quakes.deets[0]);
+	$(".date").text(quakes.date[0]);
+	$(".time").text(quakes.time[0]);
+
+	var big = quakes.mag;
+	var i = big.indexOf(Math.max.apply(Math, big));
+
+	$(".mag").text(quakes.mag[i]);
+	$(".bigPlace").text(quakes.deets[i]);
+
 };
 
 function tooltip_contents(d, defaultTitleFormat, defaultValueFormat, color) {
-	return "Magnitude: " + d[0].value + "<br>" +
-		   "Location: " + quakes.deets[d[0].x] + "<br>" +
-	       "Date: " + quakes.date[d[0].x]; 
+	return "<strong> Magnitude: </strong>" + d[0].value + "<br>" +
+		   "<strong> Location: </strong>" + quakes.deets[d[0].x] + "<br>" +
+	       "<strong> Date: </strong>" + quakes.date[d[0].x]; 
 	  };
 
 //make quake c3 graph
@@ -57,7 +66,15 @@ quakes.makeGraph = function() {
 	var chart = c3.generate({
 			    data: {			    	
 			        json: {
-			            "Earthquakes by magnitude": quakes.mag,
+			            "Earthquakes this week by magnitude": quakes.mag,
+			        }
+			    },
+			    axis: {
+			        x: {
+			            label: 'Earthquakes this week'
+			        },
+			        y: {
+			            label: 'Magnitude'
 			        }
 			    },
 			    tooltip: {
@@ -71,7 +88,7 @@ quakes.makeGraph = function() {
 quakes.map = function (){
       L.mapbox.accessToken = 'pk.eyJ1IjoiY2FyeXMiLCJhIjoiY2lmcnA0bDAxMG1yNHMybTB4cDFkMnEzMyJ9.4Z26iDuKWwLy8qs1MyTkDg';
    var map = L.mapbox.map('map', 'carys.o80m0io8')
-       .setView([62, -100.50], 3);
+       .setView([62, -100.50], 2);
 
        for (i = 0; i < quakes.mag.length; i++) {
 
@@ -83,7 +100,7 @@ quakes.map = function (){
 
 	       if (quakes.mag[i] <= 2) {
 	       	      	L.circleMarker([quakes.lat[i], quakes.long[i]], {
-	       	                color: '#E5F993',
+	       	                color: '#8BA870',
 	       	                radius: 6,
 	       	          })
 	       	      	.bindPopup(pop)
@@ -92,7 +109,7 @@ quakes.map = function (){
 
 	     else if (quakes.mag[i] > 2 && quakes.mag[i] < 3) {
 	     	      	L.circleMarker([quakes.lat[i], quakes.long[i]], {
-	     	                color: '#F9DC5C',
+	     	                color: '#FF0',
 	     	                radius: 8,
 	     	          })
 	     	      	.bindPopup(pop)
@@ -101,7 +118,7 @@ quakes.map = function (){
 
 	     else if (quakes.mag[i] > 3 && quakes.mag[i] < 4) {
 	           	L.circleMarker([quakes.lat[i], quakes.long[i]], {
-	                     color: '#E9CE2C',
+	                     color:  '#ffa500',
 	                     radius: 10,
 	               })
 	           	.bindPopup(pop)
@@ -109,7 +126,7 @@ quakes.map = function (){
 	     }
 
 	     else if (quakes.mag[i] > 4 && quakes.mag[i] < 100) {
-	     	L.circleMarker([quakes.lat[i], quakes.long[i]], {
+	     	quakes.red = L.circleMarker([quakes.lat[i], quakes.long[i]], {
 	               color: '#BF211E',
 	               radius: 12,
 	               zIndex : 1000
@@ -119,6 +136,10 @@ quakes.map = function (){
 	     }
  	};
  }; 
+
+$("button").click(function(){
+   $(".wrapper").effect( "shake", {times:4}, 1000 );
+});
 
 quakes.init = function() {
 	quakes.getData();	

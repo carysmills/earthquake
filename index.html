@@ -7,43 +7,48 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.10/c3.css">
 	<link rel="stylesheet" href="Styles/style.css">
 	<script src='https://api.mapbox.com/mapbox.js/v2.2.3/mapbox.js'></script>
-	<link href='https://fonts.googleapis.com/css?family=Sigmar+One' rel='stylesheet' type='text/css'>
+	<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,700|Sigmar+One' rel='stylesheet' type='text/css'>	
 	<link href='https://api.mapbox.com/mapbox.js/v2.2.3/mapbox.css' rel='stylesheet' />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
-<body ontouchstart=""><!--  add loading class, take off once loaded ??? -->
-<section class="wrapper">
+<body ontouchstart=""> 
+<section class="wrapper clearfix">
 		<h1 class="animated shake">EARTH&#8226;QUAKE</h1>
-		<div class="intro">
-			<h3>[urth-kweyk] &#8226 (Noun.) &#8226 <span>Occurs when rocks break and slip along a fault in the earth. Energy is released in several forms, including as movement along the fault, as heat, and as seismic waves that radiate out from the "source" xand cause the ground to shake.</span></h3>
-		</div>
 
 	<div class="intro">
-		<p>There have been <span class="number"><i class="fa fa-refresh fa-spin"></i></span> earthquakes in Canada in the last seven days.</p>
+		<p><span class="bold">[urth-kweyk] &#8226 (Noun.) &#8226 </span> There have been<span class="number"><i class="fa fa-refresh fa-spin"></i></span>earthquakes recorded in or near Canada in the last seven days. The most recent was <span class="location"><i class="fa fa-ellipsis-h"></i></span> on <span class="date"><i class="fa fa-ellipsis-h"></i></span> at <span class="time"><i class="fa fa-ellipsis-h"></i></span> (Coordinated Universal Time).</p>
+
+		<p>In the last seven days, the earthquake with the most signifant magnitude occured <span class="bigPlace"><i class="fa fa-ellipsis-h"></i></span>. The magnitude was recorded as <span class="mag"><i class="fa fa-ellipsis-h"></i></span>. See more about the last week's earthquakes on the graph and map on this page.</p> 
 	</div>
 
+	<div id='map'></div>
 
-   <div id="chart"></div>
+   <div class="chartWrapper">
+  		 <div id="chart"></div>
+   </div>	
 
-   <div id='map'></div>
-
-
-</section> <!-- end of .wrapper	 -->
+	<button>Press for a little 'quake.</button>
 
 	<footer id="footer">
-		<p>Created by <a href="http://carysmills.com">Carys Mills</a></p>
+		<p>Created by <a target="_blank" href="http://carysmills.com">Carys Mills</a>, using the <a target="_blank" href="http://www.earthquakescanada.nrcan.gc.ca/index-eng.php">Earthquakes Canada</a>API, <a target="_blank" href="https://www.mapbox.com/developers/">MapBox</a> and <a target="_blank" href="http://c3js.org/">C3.js</a>.</p>
+		<p>Contains information licensed under the <a target="_blank" href="http://open.canada.ca/en/open-government-licence-canada">Open Government Licence – Canada</a>.</p>
 	</footer>
+
+</section> <!-- end of .wrapper	 -->
 
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 	<script src ="https://cdnjs.cloudflare.com/ajax/libs/FitText.js/1.2.0/jquery.fittext.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.9/d3.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.10/c3.js"></script>
+	<script type = "text/javascript" 
+	        src = "https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/jquery-ui.min.js"></script>
 	<script src="JS/script.js"></script>
 
 	<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
 
-<!-- 	CREDITS: 
+<!-- CREDITS: 
+Earthquake by Hayashi Fumihiro from the Noun Project -->
 	
 </body>
 </html>
