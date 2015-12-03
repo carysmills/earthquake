@@ -47,10 +47,10 @@ quakes.printData = function(){
 };
 
 function tooltip_contents(d, defaultTitleFormat, defaultValueFormat, color) {
-	return  "Magnitude: " + d[0].value +
-	    "<br>" +
-	    "Location: " + quakes.deets[i];
-    };
+	return "Magnitude: " + d[0].value + "<br>" +
+		   "Location: " + quakes.deets[d[0].x] + "<br>" +
+	       "Date: " + quakes.date[d[0].x]; 
+	  };
 
 //make quake c3 graph
 quakes.makeGraph = function() {
