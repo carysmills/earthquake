@@ -8,6 +8,14 @@ quakes.time = [];
 quakes.deets = [];
 quakes.date = [];
 
+//for mapbox layers
+quakes.markerLayerOne = L.layerGroup();
+quakes.markerLayerTwo = L.layerGroup();
+quakes.markerLayerThree= L.layerGroup();
+quakes.markerLayerFour = L.layerGroup();
+
+
+
 //*Get quake data
 quakes.getData = function() {
 	$.ajax({
@@ -18,7 +26,7 @@ quakes.getData = function() {
 	  quakes.sortData(res);
 	  quakes.printData();
 	  quakes.makeGraph();
-	  quakes.map();
+	  quakes.mapper();
 	});
 };
 
@@ -42,6 +50,7 @@ quakes.sortData = function(data) {
 
 //put number of earthquakes in the last x on the page. 
 quakes.printData = function(){
+
 	$(".number").text(quakes.mag.length);
 	$(".location").text(quakes.deets[0]);
 	$(".date").text(quakes.date[0]);
@@ -85,10 +94,10 @@ quakes.makeGraph = function() {
 
 
 //make map
-quakes.map = function (){
+quakes.mapper = function (){
       L.mapbox.accessToken = 'pk.eyJ1IjoiY2FyeXMiLCJhIjoiY2lmcnA0bDAxMG1yNHMybTB4cDFkMnEzMyJ9.4Z26iDuKWwLy8qs1MyTkDg';
-   var map = L.mapbox.map('map', 'carys.o80m0io8')
-       .setView([62, -100.50], 2);
+   	  quakes.map = L.mapbox.map('map', 'carys.o80m0io8')
+       .setView([62, -100.50], 3);
 
        for (i = 0; i < quakes.mag.length; i++) {
 
@@ -96,46 +105,89 @@ quakes.map = function (){
 	     		"<strong> Felt: </strong>" + quakes.felt[i].replace(/t/i, "Yes") + "<br>" + 
 	     		"<strong> Date: </strong>" + quakes.date[i] + "<br>" +
 	     		"<strong> Time: </strong>" + quakes.time[i] + "<br>" + 
-	     		"<strong> Location: </strong>" + quakes.deets[i]
+	     		"<strong> Location: </strong>" + quakes.deets[i]	
 
 	       if (quakes.mag[i] <= 2) {
-	       	      	L.circleMarker([quakes.lat[i], quakes.long[i]], {
-	       	                color: '#8BA870',
-	       	                radius: 6,
+	       	L.circleMarker([quakes.lat[i], quakes.long[i]], {
+	       	                color: '#FFF',
+	       	                radius: 4,
 	       	          })
 	       	      	.bindPopup(pop)
-	       	      	.addTo(map);
+	       	      	.addTo(quakes.markerLayerOne);
 	       	}
 
 	     else if (quakes.mag[i] > 2 && quakes.mag[i] < 3) {
 	     	      	L.circleMarker([quakes.lat[i], quakes.long[i]], {
 	     	                color: '#FF0',
-	     	                radius: 8,
+	     	                radius: 6,
 	     	          })
 	     	      	.bindPopup(pop)
-	     	      	.addTo(map);
+	     	      	.addTo(quakes.markerLayerTwo);
 	     	}
 
 	     else if (quakes.mag[i] > 3 && quakes.mag[i] < 4) {
 	           	L.circleMarker([quakes.lat[i], quakes.long[i]], {
 	                     color:  '#ffa500',
-	                     radius: 10,
+	                     radius: 8,
 	               })
 	           	.bindPopup(pop)
-	           	.addTo(map);
+	           	.addTo(quakes.markerLayerThree);
 	     }
 
 	     else if (quakes.mag[i] > 4 && quakes.mag[i] < 100) {
-	     	quakes.red = L.circleMarker([quakes.lat[i], quakes.long[i]], {
+	     	L.marker([quakes.lat[i], quakes.long[i]], {
 	               color: '#BF211E',
-	               radius: 12,
+	               radius: 10,
 	               zIndex : 1000
 	         })
 	     	.bindPopup(pop)
-	     	.addTo(map);
+	     	.addTo(quakes.markerLayerFour);
 	     }
  	};
+ 	  quakes.markerLayerOne.addTo(quakes.map);
+ 	  quakes.markerLayerTwo.addTo(quakes.map);
+ 	  quakes.markerLayerThree.addTo(quakes.map);
+ 	  quakes.markerLayerFour.addTo(quakes.map);
+
  }; 
+
+	$( "input" ).on( "click", function() {
+
+		if($('#small').is(':checked')) { 
+			quakes.map.removeLayer(quakes.markerLayerTwo);
+			quakes.map.removeLayer(quakes.markerLayerThree);
+			quakes.map.removeLayer(quakes.markerLayerFour);
+			quakes.markerLayerOne.addTo(quakes.map);
+		}
+
+		else if ($('#smallish').is(':checked')) { 
+			quakes.map.removeLayer(quakes.markerLayerOne);
+			quakes.map.removeLayer(quakes.markerLayerThree);
+			quakes.map.removeLayer(quakes.markerLayerFour);
+			quakes.markerLayerTwo.addTo(quakes.map);
+		}
+
+		else if ($('#medium').is(':checked')) { 
+			quakes.map.removeLayer(quakes.markerLayerOne);
+			quakes.map.removeLayer(quakes.markerLayerTwo);
+			quakes.map.removeLayer(quakes.markerLayerFour);
+			quakes.markerLayerThree.addTo(quakes.map);
+		}
+
+		else if ($('#big').is(':checked')) { 
+			quakes.map.removeLayer(quakes.markerLayerOne);
+			quakes.map.removeLayer(quakes.markerLayerTwo);
+			quakes.map.removeLayer(quakes.markerLayerThree);
+			quakes.markerLayerFour.addTo(quakes.map);
+		}
+
+		else if ($('#all').is(':checked')) { 
+			quakes.markerLayerOne.addTo(quakes.map);
+			quakes.markerLayerTwo.addTo(quakes.map);
+			quakes.markerLayerThree.addTo(quakes.map);
+			quakes.markerLayerFour.addTo(quakes.map);
+		}
+	});
 
 $("button").click(function(){
    $(".wrapper").effect( "shake", {times:4}, 1000 );
