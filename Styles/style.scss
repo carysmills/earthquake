@@ -16,18 +16,30 @@ button:focus {outline:0;}
 .wrapper {
 	max-width: 1000px;
 	margin: 0 auto;
+  padding: 0 50px;
 }
 
+ @media (max-width: 400px) {
+  .wrapper {
+    padding: 0 20px;
+   }
+ }
+
 #chart {
-	margin: 5%;	
+	margin: 50px;	
   z-index: 999;
 }
 
+ @media (max-width: 400px) {
+  #chart {
+     margin: 10px 0;
+   }
+ }
+
+
 .chartWrapper {
-  background: url("http://cdn.printablepaper.net/samples/grid-portrait-ledger-2-index.png");
-  border: 5px rgba(1,1,1, 0.7);
+  background: url("../Images/paper.png");
   clear: both;
-  z-index: 1;
   box-shadow: 0px 0px 8px 2px rgba(0, 0, 0, 0.2);
 }
 
@@ -45,16 +57,27 @@ a {
       box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.2);
   }
 
+.leaflet-popup-content {
+  text-transform: capitalize;
+}
+
+
  h1 {
  	text-align: center;
  	color: #E71D36;
  	font-family: 'Sigmar One', sans-serif;
- 	margin-bottom: 50px;
+ 	// margin-bottom: 50px;
   text-shadow: 2px 2px #444;
  } 
 
+ @media (max-width: 750px) {
+   h1 {
+     margin-bottom: 15px;
+   }
+ }
+
 span {
-  background: rgba(254, 198, 1, 0.5);
+  background: rgba(254, 198, 1, 0.4);
   padding-left: 6px;
   padding-right: 7px;
 }
@@ -74,11 +97,50 @@ select {
 	width: 30%;
 	display: block;
 	margin: 0 auto;
-  margin-bottom: 50px;
   text-align: left;
   float: left;
   font-size: 14px;
 }
+
+.location, .bigPlace {
+  text-transform: capitalize;
+}
+
+.legendContainer {
+  width: 30%;
+  float: left;
+}
+
+@media (max-width: 750px) {
+  #map {
+    width: 75%;
+    float: right;
+    height: 50vh;
+  }
+  .legendContainer {
+    margin-right: 10px;
+    width: 22%;
+    float: left;
+  }
+  .intro {
+   width: 100%;
+   margin-bottom: 30px;
+  }
+} 
+
+@media (max-width: 450px) {
+  #map {
+    width: 100%;
+    margin-bottom: 0;
+  }
+  .legendContainer {
+    width: 100%;
+    margin-bottom: 50px;
+  }
+  .legend .fa-long-arrow-right {
+    display: none;
+  }
+} 
 
 .legend {
   margin-bottom: 0;
@@ -113,6 +175,26 @@ label:before {
     background-color: #E71D36;
 }
 
+label[for=small]:before {
+    background-color: #FFF;
+}
+
+label[for=smallish]:before {
+    background-color: #FF0;
+}
+
+label[for=medium]:before {
+    background-color: #ffa500,
+  }
+
+label[for=big]:before {
+    background-color: #BF211E;
+}
+
+label[for=all]:before {
+    background-color: grey;
+}
+
 input[type=radio]:checked + label:before {
     content: "\2022";
     color: black;
@@ -126,10 +208,10 @@ footer {
   text-align: center;
   padding: 15px 0;
   margin-top: 20px;
-  line-height: 0.7;
+  line-height: 1;
   font-size: 12px;
   a {
-    background: rgba(254, 198, 1, 0.5);
+    background: rgba(254, 198, 1, 0.4);
     padding-left: 6px;
     padding-right: 7px;
     transition: background 1s;
@@ -138,6 +220,12 @@ footer {
     }
   }
 }
+
+ @media (max-width: 400px) {
+  footer {
+     line-height: 1.5;
+   }
+ }
 
 .c3-tooltip-container {
   background: rgba(220,220,220,0.8);
@@ -153,6 +241,12 @@ footer {
   font-size: 12px;
   font-family: 'Open Sans', sans-serif;
 }
+
+ @media (max-width: 750px) {
+  .c3-axis-y-label, .c3-axis-x-label {
+     font-size: 10px;
+   }
+ }
 
 button {
   display: block;

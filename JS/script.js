@@ -52,15 +52,15 @@ quakes.sortData = function(data) {
 quakes.printData = function(){
 
 	$(".number").text(quakes.mag.length);
-	$(".location").text(quakes.deets[0]);
+	$(".location").text(quakes.deets[0].toLowerCase());
 	$(".date").text(quakes.date[0]);
-	$(".time").text(quakes.time[0]);
+	$(".time").text(quakes.time[0].replace((/\+.*$/),''));
 
 	var big = quakes.mag;
 	var i = big.indexOf(Math.max.apply(Math, big));
 
 	$(".mag").text(quakes.mag[i]);
-	$(".bigPlace").text(quakes.deets[i]);
+	$(".bigPlace").text(quakes.deets[i].toLowerCase());
 
 };
 
@@ -96,16 +96,21 @@ quakes.makeGraph = function() {
 //make map
 quakes.mapper = function (){
       L.mapbox.accessToken = 'pk.eyJ1IjoiY2FyeXMiLCJhIjoiY2lmcnA0bDAxMG1yNHMybTB4cDFkMnEzMyJ9.4Z26iDuKWwLy8qs1MyTkDg';
-   	  quakes.map = L.mapbox.map('map', 'carys.o80m0io8')
-       .setView([62, -100.50], 3);
+
+       var mq = window.matchMedia( "(min-width: 700px)" );
+       if (mq.matches){
+           quakes.map = new L.mapbox.map('map', 'carys.o80m0io8').setView([62, -100.50], 3); //zoom for desktop size
+       } else {
+           quakes.map = new L.mapbox.map('map', 'carys.o80m0io8').setView([62, -100.50], 2); //for mobile size
+       };
 
        for (i = 0; i < quakes.mag.length; i++) {
 
        	var pop = "<strong> Magnitude: </strong>" + quakes.mag[i] + "<br>" +
 	     		"<strong> Felt: </strong>" + quakes.felt[i].replace(/t/i, "Yes") + "<br>" + 
 	     		"<strong> Date: </strong>" + quakes.date[i] + "<br>" +
-	     		"<strong> Time: </strong>" + quakes.time[i] + "<br>" + 
-	     		"<strong> Location: </strong>" + quakes.deets[i]	
+	     		"<strong> Time: </strong>" + quakes.time[i].replace((/\+.*$/),'') + "<br>" + 
+	     		"<strong> Location: </strong>" + quakes.deets[i].toLowerCase()	
 
 	       if (quakes.mag[i] <= 2) {
 	       	L.circleMarker([quakes.lat[i], quakes.long[i]], {
@@ -190,7 +195,7 @@ quakes.mapper = function (){
 	});
 
 $("button").click(function(){
-   $(".wrapper").effect( "shake", {times:4}, 1000 );
+   $(".wrapper").effect("shake", {times:4}, 1000 );
 });
 
 quakes.init = function() {
@@ -199,5 +204,5 @@ quakes.init = function() {
 
 $(document).ready(function(){
   quakes.init();
-  $("h1").fitText(1.2);
+  $("h1").fitText(0.9);
 });

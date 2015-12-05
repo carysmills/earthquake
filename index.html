@@ -15,15 +15,20 @@
 
 <body ontouchstart=""> 
 <section class="wrapper clearfix">
-		<h1 class="animated shake">EARTH&#8226;QUAKE</h1>
+		<h1 class="animated shake">EARTHQUAKE!</h1>
 
-	<div class="intro">
+	<div class="intro clearfix">
 		<p>There have been<span class="number"><i class="fa fa-refresh fa-spin"></i></span>earthquakes recorded in or near Canada in the last seven days. The most recent was <span class="location"><i class="fa fa-ellipsis-h"></i></span> on <span class="date"><i class="fa fa-ellipsis-h"></i></span> at <span class="time"><i class="fa fa-ellipsis-h"></i></span> (Coordinated Universal Time).</p>
 
 		<p>In the last seven days, the earthquake with the most signifant magnitude occured <span class="bigPlace"><i class="fa fa-ellipsis-h"></i></span>. The magnitude was recorded as <span class="mag"><i class="fa fa-ellipsis-h"></i></span>. See more about the last week's earthquakes on the graph and map on this page.</p> 
 
-		<p class="legend">Select a magnitude to view on the map <i class="fa fa-long-arrow-right"></i>
-</p>
+	</div>  
+
+	<div id='map'></div> 
+
+	<div class="legendContainer">
+
+		<p class="legend">Select a magnitude to view on the map <i class="fa fa-long-arrow-right"></i></p>
 
 		    <input type="radio" name="mag" value="small" id="small">
 		    <label for="small">Less than 2</label>
@@ -39,10 +44,8 @@
 
 		    <input type="radio" name="mag" value="all" id="all" checked>
 		    <label for="all">All</label>
-
-	</div>
-
-	<div id='map'></div>
+	 
+	 </div>
 
    <div class="chartWrapper">
   		 <div id="chart"></div>
@@ -51,7 +54,7 @@
 	<button>Press for a little shake.</button>
 
 	<footer id="footer">
-		<p>Created by <a target="_blank" href="http://carysmills.com">Carys Mills</a>, using the <a target="_blank" href="http://www.earthquakescanada.nrcan.gc.ca/index-eng.php">Earthquakes Canada</a>API, <a target="_blank" href="https://www.mapbox.com/developers/">MapBox</a> and <a target="_blank" href="http://c3js.org/">C3.js</a>.</p>
+		<p>Made by <a target="_blank" href="http://carysmills.com">Carys Mills</a>, using the <a target="_blank" href="http://www.earthquakescanada.nrcan.gc.ca/index-eng.php">Earthquakes Canada</a>API, <a target="_blank" href="https://www.mapbox.com/developers/">MapBox</a> and <a target="_blank" href="http://c3js.org/">C3.js</a>.</p>
 		<p>Contains information licensed under the <a target="_blank" href="http://open.canada.ca/en/open-government-licence-canada">Open Government Licence – Canada</a>.</p>
 	</footer>
 
