@@ -43,7 +43,11 @@ quakes.sortData = function(data) {
 	  		quakes.long.push(data[info].geoJSON.coordinates[1]);
 	  		quakes.time.push(data[info].origin_time.replace(/^.+T/,''));
 	  		quakes.date.push(data[info].origin_time.replace(/T.*$/, ""));
-	  		quakes.deets.push(data[info].location.en);
+		  	   if (typeof data[info].location != "undefined") {
+		  	      quakes.deets.push(data[info].location.en);
+		  	   } else {
+		  	   	 quakes.deets = "";
+		  	   };
 	  	}
 	  }
 };
@@ -51,16 +55,25 @@ quakes.sortData = function(data) {
 //put number of earthquakes in the last x on the page. 
 quakes.printData = function(){
 
-	$(".number").text(quakes.mag.length);
-	$(".location").text(quakes.deets[0].toLowerCase());
+	$(".number").text(quakes.mag.length);	
 	$(".date").text(quakes.date[0]);
 	$(".time").text(quakes.time[0].replace((/\+.*$/),''));
 
+	if (quakes.deets != "") {
+	   $(".location").text(quakes.deets[0].toLowerCase());
+	} else {
+		$(".location").text("(Location details N/A on your browser)");
+	};
+
 	var big = quakes.mag;
 	var i = big.indexOf(Math.max.apply(Math, big));
-
 	$(".mag").text(quakes.mag[i]);
-	$(".bigPlace").text(quakes.deets[i].toLowerCase());
+
+	if (quakes.deets != "") {
+	   $(".bigPlace").text(quakes.deets[i].toLowerCase());
+	} else {
+		$(".bigPlace").text("(Location details N/A on your browser)");
+	};
 
 };
 
@@ -110,7 +123,7 @@ quakes.mapper = function (){
 	     		"<strong> Felt: </strong>" + quakes.felt[i].replace(/t/i, "Yes") + "<br>" + 
 	     		"<strong> Date: </strong>" + quakes.date[i] + "<br>" +
 	     		"<strong> Time: </strong>" + quakes.time[i].replace((/\+.*$/),'') + "<br>" + 
-	     		"<strong> Location: </strong>" + quakes.deets[i].toLowerCase()	
+	     		"<strong> Location: </strong>" + quakes.deets[i]
 
 	       if (quakes.mag[i] <= 2) {
 	       	L.circleMarker([quakes.lat[i], quakes.long[i]], {
@@ -139,8 +152,8 @@ quakes.mapper = function (){
 	           	.addTo(quakes.markerLayerThree);
 	     }
 
-	     else if (quakes.mag[i] > 4 && quakes.mag[i] < 100) {
-	     	L.marker([quakes.lat[i], quakes.long[i]], {
+	     else if (quakes.mag[i] > 4) {
+	     	L.circleMarker([quakes.lat[i], quakes.long[i]], {
 	               color: '#BF211E',
 	               radius: 10,
 	               zIndex : 1000

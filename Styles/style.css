@@ -180,6 +180,7 @@ h1 {
   text-align: center;
   color: #E71D36;
   font-family: 'Sigmar One', sans-serif;
+  margin-bottom: 50px;
   text-shadow: 2px 2px #444; }
 
 @media (max-width: 750px) {
